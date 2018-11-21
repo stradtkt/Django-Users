@@ -61,7 +61,7 @@ def register_page(request):
     context = {
         "form": form
     }
-    return render(request, 'users/register', context)
+    return render(request, 'users/register.html', context)
 
 def dashboard(request):
     try:
@@ -71,5 +71,8 @@ def dashboard(request):
 
     if 'id' in request.session == None:
         return redirect('users:home')
-    context = {}
-    return render(request, 'users/dashboard', context)
+    users = User.objects.all()
+    context = {
+        "users": users
+    }
+    return render(request, 'users/dashboard.html', context)

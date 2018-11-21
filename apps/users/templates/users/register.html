@@ -5,6 +5,28 @@
 
 <div class="container">
         <div class="row">
+            <div class="col-lg-6 offset-3">
+                    {% if messages %}
+                    <ul class="messages mt-1 mb-1">
+                        {% for message in messages %}
+                            <li {% if message.tags == "error" %} class="bg-danger text-white" 
+                            {% elif message.tags == "success" %} class="bg-success text-white"
+                            {% endif %}>{{message}}</li><br>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>Register</h1>
+            <small class="text-danger">All fields all required, the choose file is for an image for yourself.</small>
+        </div>
+    </div>
+        <div class="row">
             <div class="col-md-6 offset-3">
                 <form action="{% url 'users:register' %}" method="POST" class="text-center">
                     {% csrf_token %}

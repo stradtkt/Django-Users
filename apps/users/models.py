@@ -1,21 +1,8 @@
-import os
-import random
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.db import models
 from datetime import date
 
-
-def get_filename_ext(filepath):
-    base_name = os.path.basename(filepath)
-    name, ext = os.path.splitext(base_name)
-    return name, ext
-
-def upload_image_path(instance, filename):
-    new_filename = random.randint(1,391023943)
-    name, ext = get_filename_ext(filename)
-    final_filename = '{new_filename}{ext}'.format(new_filename=new_filename, ext=ext)
-    return "users/{new_filename}/{final_filename}".format(new_filename=new_filename, final_filename=final_filename)
 
 class UserManager(models.Manager):
     def validate_user(self, postData):
@@ -61,7 +48,6 @@ class User(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
-    image = models.ImageField()
     username = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
