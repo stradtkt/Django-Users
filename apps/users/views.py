@@ -76,3 +76,30 @@ def dashboard(request):
         "users": users
     }
     return render(request, 'users/dashboard.html', context)
+
+def delete_user(request, id):
+    try:
+        request.session['id']
+    except KeyError:
+        return redirect('users:home')
+
+    if 'id' in request.session == None:
+        return redirect('users:home')
+    user = User.objects.get(id=id)
+    user.delete()
+    messages.success(request, 'User Deleted')
+    return redirect('users:dashboard')
+
+def profile(request, id):
+    try:
+        request.session['id']
+    except KeyError:
+        return redirect('users:home')
+
+    if 'id' in request.session == None:
+        return redirect('users:home')
+    user = User.objects.get(id=id)
+    context = {
+        "user": user
+    }
+    return render(request, 'users/profile.html', context)

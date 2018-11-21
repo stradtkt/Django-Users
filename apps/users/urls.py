@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^login-page$', views.login_page, name='login_page'),
     url(r'^register-page$', views.register_page, name='register_page'),
     url(r'^dashboard$', views.dashboard, name='dashboard'),
-
+    url(r'^dashboard/delete/(?P<id>\d+)$', views.delete_user, name='delete_user'),
+    url(r'^dashboard/profile/(?P<id>\d+)$', views.profile, name='profile'),
 ]
