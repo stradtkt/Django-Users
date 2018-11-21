@@ -1,0 +1,37 @@
+{% extends 'users/layout.html' %}
+{% block title %} User Home | {{block.super}} {% endblock %}
+{% block content %} 
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="jumbotron text-center">
+                <h1>User Dashboard</h1>
+                <hr>
+                <p><a href="/register-page" class="btn btn-info">Sign Up</a> or <a href="/login-page" class="btn btn-info">Login</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <fieldset>
+                <legend>Edit Users</legend>
+                This app will allow you to edit your user as you wish.
+            </fieldset>
+        </div>
+        <div class="col-md-4">
+            <fieldset>
+                <legend>Delete</legend>
+                This app will allow you to delete your user and recreate another one.
+            </fieldset>
+        </div>
+        <div class="col-md-4">
+            <fieldset>
+                <legend>Messeges</legend>
+                This app will allow you to send messages to other users on the app.
+            </fieldset>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
