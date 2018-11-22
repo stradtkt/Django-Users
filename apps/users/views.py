@@ -72,8 +72,10 @@ def dashboard(request):
     if 'id' in request.session == None:
         return redirect('/')
     users = User.objects.all()
+    user = User.objects.get(id=request.session['id'])
     context = {
-        "users": users
+        "users": users,
+        "user": user
     }
     return render(request, 'users/dashboard.html', context)
 
@@ -98,12 +100,12 @@ def profile(request, id):
 
     if 'id' in request.session == None:
         return redirect('/')
-    user = User.objects.get(id=id)
-    msgs = Message.objects.filter(receiver=user)
-    comments = Comment.objects.all()
+    profile = User.objects.get(id=id)
+    msgs = Message.objects.filter(receiver=profile)
+    user = User.objects.get(id=request.session['id'])
     context = {
+        "profile": profile,
         "user": user,
-        "comments": comments,
         "msgs": msgs
     }
     return render(request, 'users/profile.html', context)
@@ -117,10 +119,12 @@ def comments(request, id):
     if 'id' in request.session == None:
         return redirect('/')
     msg = Message.objects.get(id=id)
-    comments = Comment.objects.filter(message=msg)
+    comments = Comment.objects.filter(message=msg).order_by("-created_at")
+    user = User.objects.get(id=request.session['id'])
     context = {
         "msg": msg,
-        "comments": comments
+        "comments": comments,
+        "user": user
     }
     return render(request, 'users/comments.html', context)   
 
