@@ -4,10 +4,26 @@
 
 
 <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-3">
+                    {% if messages %}
+                    <ul class="messages mt-1 mb-1">
+                        {% for message in messages %}
+                            <li {% if message.tags == "error" %} class="bg-danger text-white" 
+                            {% elif message.tags == "success" %} class="bg-success text-white"
+                            {% endif %}>{{message}}</li><br>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+<div class="container">
     <div class="row">
         <div class="col-md-12">
             <div class="jumbotron text-center">
-                <p>From: {{messge.sender.first_name}} {{messge.sender.first_name}}</p>
+                <p>From: {{message.sender.first_name}} {{message.sender.last_name}}</p>
                 <p>{{message.content}}</p>
                 <hr>
                 <p>{{message.created_at}}</p>
@@ -24,6 +40,9 @@
                     <small>{{comment.created_at}}</small>
                     <p>{{comment.content}}</p>
                     <small>{{comment.user.first_name}} {{comment.user.last_name}}</small>
+                    {% if comment.user.id == request.session.id %}
+                        <small><a href="/comments/{{message.id}}/delete/{{comment.id}}" class="btn btn-danger">Delete</a></small>
+                    {% endif %}
                 </div>
             {% endfor %}
                 <form action="/comments/{{message.id}}/send_comment" method="POST" class="text-center">

@@ -109,7 +109,7 @@ def profile(request, id):
     return render(request, 'users/profile.html', context)
 
 def comments(request, id):
-     try:
+    try:
         request.session['id']
     except KeyError:
         return redirect('/')
@@ -117,10 +117,10 @@ def comments(request, id):
     if 'id' in request.session == None:
         return redirect('/')
     message = Message.objects.get(id=id)
-    comment = Comment.objects.filter(message=message)
+    comments = Comment.objects.filter(message=message)
     context = {
         "message": message,
-        "comment": comment
+        "comments": comments
     }
     return render(request, 'users/comments.html', context)   
 
@@ -152,3 +152,9 @@ def send_comment(request, id):
         Comment.objects.create(user=user, message=message, content=content)
         messages.success(request, 'Sent Comment')
         return redirect('/comments/{}'.format(id))
+
+def delete_comment(request, message_id, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    comment.delete()
+    messages.success(request, 'Deleted Comment')
+    return redirect("comments/{}".format(message_id))

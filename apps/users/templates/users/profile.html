@@ -4,6 +4,22 @@
 
 
 <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-3">
+                    {% if messages %}
+                    <ul class="messages mt-1 mb-1">
+                        {% for message in messages %}
+                            <li {% if message.tags == "error" %} class="bg-danger text-white" 
+                            {% elif message.tags == "success" %} class="bg-success text-white"
+                            {% endif %}>{{message}}</li><br>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+<div class="container">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
             <div class="jumbotron text-center text-white">
@@ -49,7 +65,7 @@
                         <div class="message">
                             <small>{{message.created_at}}</small>
                             <p>{{message.content}}</p>
-                            <small>{{message.sender.first_name}} {{message.sender.last_name}}</small>
+                            <small>{{message.sender.first_name}} {{message.sender.last_name}}</small> <br>
                             <a href="/comments/{{message.id}}" class="btn btn-info btn-round">Comments</a>
                         </div>
                        

@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^dashboard/profile/(?P<id>\d+)/send_message$', views.send_message),
     url(r'^comments/(?P<id>\d+)$', views.comments),
     url(r'^comments/(?P<id>\d+)/send_comment$', views.send_comment),
+    url(r'^comments/(?P<message_id>\d+)/delete/(?P<comment_id>\d+)', views.delete_comment),
 ]
