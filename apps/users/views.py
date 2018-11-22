@@ -108,6 +108,22 @@ def profile(request, id):
     }
     return render(request, 'users/profile.html', context)
 
+def comments(request, id):
+     try:
+        request.session['id']
+    except KeyError:
+        return redirect('/')
+
+    if 'id' in request.session == None:
+        return redirect('/')
+    message = Message.objects.get(id=id)
+    comment = Comment.objects.filter(message=message)
+    context = {
+        "message": message,
+        "comment": comment
+    }
+    return render(request, 'users/comments.html', context)   
+
 def send_message(request, id):
     errors = Message.objects.validate_message(request.POST)
     if len(errors):
