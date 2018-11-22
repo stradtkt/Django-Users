@@ -26,7 +26,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 offset-3">
-            <form action="{% url 'users:login' %}" method="POST" class="text-center">
+            <form action="login" method="POST" class="text-center">
                 {% csrf_token %}
                 {{form.as_p}}
                 <input type="submit" value="Login" class="btn btn-success btn-round">

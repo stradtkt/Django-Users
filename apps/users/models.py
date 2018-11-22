@@ -63,8 +63,8 @@ class MessageManager(models.Manager):
         return errors
 
 class Message(models.Model):
-    sender = models.ForeignKey(User, related_name="sender", on_delete=models.CASCADE)
-    receiver = models.ForeignKey(User, related_name="receiver", on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, related_name="message_sender", on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User, related_name="message_receiver", on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -81,7 +81,7 @@ class CommentManager(models.Manager):
 
 class Comment(models.Model):
     message = models.ForeignKey(Message, related_name='message', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, related_name='comment', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -4,6 +4,22 @@
 
 
 <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-3">
+                    {% if messages %}
+                    <ul class="messages mt-1 mb-1">
+                        {% for message in messages %}
+                            <li {% if message.tags == "error" %} class="bg-danger text-white" 
+                            {% elif message.tags == "success" %} class="bg-success text-white"
+                            {% endif %}>{{message}}</li><br>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+<div class="container">
     <div class="row">
         <div class="col-md-10 offset-1">
             <div class="card mt-5 mb-5">
@@ -25,9 +41,9 @@
                                 <td>{{user.username}}</td>
                                 <td>{{user.created_at}}</td>
                                 <td>
-                                    <a href="" class="btn btn-success">Profile</a>
+                                    <a href="/dashboard/profile/{{user.id}}" class="btn btn-success">Profile</a>
                                     <a href="" class="btn btn-warning">Edit</a>
-                                    <a href="" class="btn btn-danger">Delete</a>
+                                    <a href="/dashboard/delete/{{user.id}}" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
                         {% endfor %}

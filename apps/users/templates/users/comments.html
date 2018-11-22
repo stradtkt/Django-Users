@@ -1,0 +1,40 @@
+{% extends 'users/layout.html' %}
+{% block title %} Comments | {{block.super}} {% endblock %}
+{% block content %} 
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron text-center">
+                <p>From: {{messge.sender.first_name}} {{messge.sender.first_name}}</p>
+                <p>{{message.content}}</p>
+                <hr>
+                <p>{{message.created_at}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-2">
+                {% for comment in comments %}
+                <div class="comment">
+                    <small>{{comment.created_at}}</small>
+                    <p>{{comment.content}}</p>
+                    <small>{{comment.user.first_name}} {{comment.user.last_name}}</small>
+                </div>
+            {% endfor %}
+                <form action="/comments/{{message.id}}/send_comment" method="POST" class="text-center">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <textarea name="content" cols="30" rows="10" class="form-control"></textarea>
+                    </div>
+                    <input type="submit" value="Send" class="btn btn-info btn-round">
+                </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

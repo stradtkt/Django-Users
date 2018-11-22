@@ -1,3 +1,24 @@
 form p label {
     display: none;
 }
+.messages {
+    list-style-type: none;
+}
+.messages li {
+    text-align: center;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+}
+.jumbotron {
+    background: linear-gradient(120deg, rgba(10,10,10,0.5), rgba(100,100,100,0.5));
+    background: -webkit-linear-gradient(120deg, rgba(10,10,10,0.5), rgba(100,100,100,0.5));
+    background: -moz-linear-gradient(120deg, rgba(10,10,10,0.5), rgba(100,100,100,0.5));
+    background: -o-linear-gradient(120deg, rgba(10,10,10,0.5), rgba(100,100,100,0.5));
+    color: white;
+}
+hr {
+    border-color: dodgerblue;
+}

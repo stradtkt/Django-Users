@@ -24,7 +24,7 @@
                     <h4 class="text-center">Leave a message to this user?</h4>
                 </div>
                 <div class="card-body text-center">
-                    <form action="{% url 'users:send_message' id=user.id %}" method="POST" class="text-center">
+                    <form action="/dashboard/profile/{{user.id}}/send_message" method="POST" class="text-center">
                         {% csrf_token %}
                         <div class="form-group">
                             <textarea name="content" cols="30" rows="10" class="form-control" placeholder="Send a message here..."></textarea>
@@ -48,23 +48,11 @@
                     {% for message in messages %}
                         <div class="message">
                             <small>{{message.created_at}}</small>
-                            <p>{{messge.content}}</p>
-                            <small>{{message.sender}}</small>
+                            <p>{{message.content}}</p>
+                            <small>{{message.sender.first_name}} {{message.sender.last_name}}</small>
+                            <a href="/comments/{{message.id}}" class="btn btn-info btn-round">Comments</a>
                         </div>
-                        <form action="{% url 'users:send_comment' id=message.id %}" method="POST" class="text-center">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <textarea name="content" cols="30" rows="10" class="form-control"></textarea>
-                            </div>
-                            <input type="submit" value="Send" class="btn btn-info btn-round">
-                        </form>
-                        {% for comment in message.comment %}
-                            <div class="comment">
-                                <small>{{comment.created_at}}</small>
-                                <p>{{comment.content}}</p>
-                                <small>{{comment.user}}</small>
-                            </div>
-                        {% endfor %}
+                       
                     {% endfor %}
                 </div>
             </div>
