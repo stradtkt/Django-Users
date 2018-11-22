@@ -23,10 +23,10 @@
     <div class="row">
         <div class="col-md-12">
             <div class="jumbotron text-center">
-                <p>From: {{message.sender.first_name}} {{message.sender.last_name}}</p>
-                <p>{{message.content}}</p>
+                <p>From: {{msg.sender.first_name}} {{msg.sender.last_name}}</p>
+                <p>{{msg.content}}</p>
                 <hr>
-                <p>{{message.created_at}}</p>
+                <p>{{msg.created_at}}</p>
             </div>
         </div>
     </div>
@@ -41,11 +41,11 @@
                     <p>{{comment.content}}</p>
                     <small>{{comment.user.first_name}} {{comment.user.last_name}}</small>
                     {% if comment.user.id == request.session.id %}
-                        <small><a href="/comments/{{message.id}}/delete/{{comment.id}}" class="btn btn-danger">Delete</a></small>
+                        <small><a href="/comments/{{msg.id}}/delete/{{comment.id}}" class="btn btn-danger">Delete</a></small>
                     {% endif %}
                 </div>
             {% endfor %}
-                <form action="/comments/{{message.id}}/send_comment" method="POST" class="text-center">
+                <form action="/comments/{{msg.id}}/send_comment" method="POST" class="text-center">
                     {% csrf_token %}
                     <div class="form-group">
                         <textarea name="content" cols="30" rows="10" class="form-control"></textarea>

@@ -61,12 +61,12 @@
                     <h3 class="text-center">Messages</h3>
                 </div>
                 <div class="card-body text-center">
-                    {% for message in messages %}
+                    {% for msg in msgs %}
                         <div class="message">
-                            <small>{{message.created_at}}</small>
-                            <p>{{message.content}}</p>
-                            <small>{{message.sender.first_name}} {{message.sender.last_name}}</small> <br>
-                            <a href="/comments/{{message.id}}" class="btn btn-info btn-round">Comments</a>
+                            <small>{{msg.created_at}}</small>
+                            <p>{{msg.content}}</p>
+                            <small>{{msg.sender.first_name}} {{msg.sender.last_name}}</small> <br>
+                            <a href="/comments/{{msg.id}}" class="btn btn-info btn-round">Comments</a>
                         </div>
                        
                     {% endfor %}

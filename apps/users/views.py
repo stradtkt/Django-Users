@@ -99,12 +99,12 @@ def profile(request, id):
     if 'id' in request.session == None:
         return redirect('/')
     user = User.objects.get(id=id)
-    messages = Message.objects.filter(receiver=user)
+    msgs = Message.objects.filter(receiver=user)
     comments = Comment.objects.all()
     context = {
         "user": user,
         "comments": comments,
-        "messages": messages
+        "msgs": msgs
     }
     return render(request, 'users/profile.html', context)
 
@@ -116,10 +116,10 @@ def comments(request, id):
 
     if 'id' in request.session == None:
         return redirect('/')
-    message = Message.objects.get(id=id)
-    comments = Comment.objects.filter(message=message)
+    msg = Message.objects.get(id=id)
+    comments = Comment.objects.filter(message=msg)
     context = {
-        "message": message,
+        "msg": msg,
         "comments": comments
     }
     return render(request, 'users/comments.html', context)   
@@ -157,4 +157,4 @@ def delete_comment(request, message_id, comment_id):
     comment = Comment.objects.get(id=comment_id)
     comment.delete()
     messages.success(request, 'Deleted Comment')
-    return redirect("comments/{}".format(message_id))
+    return redirect("/comments/{}".format(message_id))
