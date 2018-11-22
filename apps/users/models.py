@@ -27,8 +27,6 @@ class UserManager(models.Manager):
         else:
             if User.objects.filter(email=postData['email']):
                 errors['email'] = "This email already exists"
-
-                
         try:
             postData['username']
         except ValidationError:
@@ -55,12 +53,31 @@ class User(models.Model):
     objects = UserManager()
 
 
+class MessageManager(models.Manager):
+    def validate_message(self, postData):
+        errors = {}
+        if len(postData['content']) < 5:
+            errors['content'] = "You need to have a longer message with 5 or more characters"
+        if len(postData['content']) > 1000:
+            errors['content'] = "Your message needs to be smaller tham 1000 characters"
+        return errors
+
 class Message(models.Model):
     sender = models.ForeignKey(User, related_name="sender", on_delete=models.CASCADE)
     receiver = models.ForeignKey(User, related_name="receiver", on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = MessageManager()
+
+class CommentManager(models.Manager):
+    def validate_comment(self, postData):
+        errors = {}
+        if len(postData['content']) < 5:
+            errors['content'] = "You need to have a longer message with 5 or more characters"
+        if len(postData['content']) > 1000:
+            errors['content'] = "Your message needs to be smaller tham 1000 characters"
+        return errors
 
 class Comment(models.Model):
     message = models.ForeignKey(Message, related_name='message', on_delete=models.CASCADE)
@@ -68,3 +85,4 @@ class Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = CommentManager()

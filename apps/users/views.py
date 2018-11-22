@@ -2,6 +2,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 from .forms import *
 from .models import *
 import bcrypt
@@ -103,3 +104,19 @@ def profile(request, id):
         "user": user
     }
     return render(request, 'users/profile.html', context)
+
+def send_message(request, id):
+    errors = Message.objects.validate_message(request.POST)
+    if len(errors):
+        for tag, error in errors.items():
+            messages.error(request, error)
+        return redirect(reverse("users:profile", kwargs={'id': id}))
+    else:
+        receiver = User.objects.get(id=id)
+        sender = User.objects.get(id=request.session['id'])
+        content = request.POST['content']
+        Message.objects.create(receiver=receiver, sender=sender, content=content)
+        messages.success(request, 'Sent message')
+        return redirect(reverse('users:profile', kwargs={'id': id}))
+
+

@@ -1,0 +1,76 @@
+{% extends 'users/layout.html' %}
+{% block title %} User Dashboard | {{block.super}} {% endblock %}
+{% block content %} 
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="jumbotron text-center text-white">
+                <h3>{{user.first_name}} {{user.last_name}}</h3>
+                <hr>
+                <p>{{user.email}}</p>
+                <p>{{user.username}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-3">
+            <div class="card mt-5 mb-5">
+                <div class="card-header">
+                    <h4 class="text-center">Leave a message to this user?</h4>
+                </div>
+                <div class="card-body text-center">
+                    <form action="{% url 'users:send_message' id=user.id %}" method="POST" class="text-center">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <textarea name="content" cols="30" rows="10" class="form-control" placeholder="Send a message here..."></textarea>
+                        </div>
+                        <input type="submit" value="Send" class="btn btn-success btn-round">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 offset-1">
+            <div class="card mt-1 mb-1">
+                <div class="card-header">
+                    <h3 class="text-center">Messages</h3>
+                </div>
+                <div class="card-body text-center">
+                    {% for message in messages %}
+                        <div class="message">
+                            <small>{{message.created_at}}</small>
+                            <p>{{messge.content}}</p>
+                            <small>{{message.sender}}</small>
+                        </div>
+                        <form action="{% url 'users:send_comment' id=message.id %}" method="POST" class="text-center">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <textarea name="content" cols="30" rows="10" class="form-control"></textarea>
+                            </div>
+                            <input type="submit" value="Send" class="btn btn-info btn-round">
+                        </form>
+                        {% for comment in message.comment %}
+                            <div class="comment">
+                                <small>{{comment.created_at}}</small>
+                                <p>{{comment.content}}</p>
+                                <small>{{comment.user}}</small>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
