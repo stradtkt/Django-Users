@@ -162,3 +162,39 @@ def delete_comment(request, message_id, comment_id):
     comment.delete()
     messages.success(request, 'Deleted Comment')
     return redirect("/comments/{}".format(message_id))
+
+def edit_page(request, id):
+    try:
+        request.session['id']
+    except KeyError:
+        return redirect('/')
+
+    if 'id' in request.session == None:
+        return redirect('/')
+    user = User.objects.get(id=request.session['id'])
+    edit_user = User.objects.get(id=id)
+    context = {
+        "user": user,
+        "edit_user": edit_user
+    }
+    return render(request, 'users/edit-user.html', context)
+
+def update_user(request, id):
+    errors = User.objects.validate_user(request.POST)
+    if len(errors):
+        for tag, error in errors.items():
+            messages.error(request, error)
+        return redirect('/dashboard/edit/{}'.format(id))
+    else:
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        username = request.POST['username']
+        user = User.objects.get(id=id)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.username = username
+        user.save()
+        messages.success(request, 'Successfully Updated User')
+        return redirect('/dashboard/edit/{}'.format(id))
