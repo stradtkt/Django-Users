@@ -177,24 +177,39 @@ def edit_page(request, id):
         "user": user,
         "edit_user": edit_user
     }
-    return render(request, 'users/edit-user.html', context)
+    return render(request, 'users/edit.html', context)
 
 def update_user(request, id):
-    errors = User.objects.validate_user(request.POST)
-    if len(errors):
-        for tag, error in errors.items():
-            messages.error(request, error)
-        return redirect('/dashboard/edit/{}'.format(id))
-    else:
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        email = request.POST['email']
-        username = request.POST['username']
-        user = User.objects.get(id=id)
-        user.first_name = first_name
-        user.last_name = last_name
-        user.email = email
-        user.username = username
-        user.save()
-        messages.success(request, 'Successfully Updated User')
-        return redirect('/dashboard/edit/{}'.format(id))
+    if request.POST['form'] == 'update_user':
+        errors = User.objects.validate_update_user(request.POST)
+        if len(errors):
+            for tag, error in errors.items():
+                messages.error(request, error)
+            return redirect('/dashboard/edit-user/{}'.format(id))
+        else:
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            email = request.POST['email']
+            username = request.POST['username']
+            user = User.objects.get(id=id)
+            user.first_name = first_name
+            user.last_name = last_name
+            user.email = email
+            user.username = username
+            user.save()
+            messages.success(request, 'Successfully Updated User')
+            return redirect('/dashboard/edit/{}'.format(id))
+    elif request.POST['form'] == "update_password":
+        errors = User.objects.validate_update_password(request.POST)
+        if len(errors):
+            for tag, error in errors.items():
+                messages.error(request, error)
+            return redirect('/dashboard/edit-user/{}'.format(id))
+        else:
+            password = request.POST['password']
+            hashed_pw = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+            user = User.objects.get(id=id)
+            user.password = hashed_pw
+            user.save()
+            messages.success(request, 'Successfully changed password')
+            return redirect('/dashboard/edit-user/{}'.format(id))

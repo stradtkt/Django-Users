@@ -10,9 +10,12 @@ urlpatterns = [
     url(r'^register-page$', views.register_page),
     url(r'^dashboard$', views.dashboard),
     url(r'^dashboard/delete/(?P<id>\d+)$', views.delete_user),
+    url(r'^dashboard/edit-user/(?P<id>\d+)$', views.edit_page),
+    url(r'^dashboard/edit-user/(?P<id>\d+)/update-user$', views.update_user),
     url(r'^dashboard/profile/(?P<id>\d+)$', views.profile),
     url(r'^dashboard/profile/(?P<id>\d+)/send_message$', views.send_message),
     url(r'^comments/(?P<id>\d+)$', views.comments),
     url(r'^comments/(?P<id>\d+)/send_comment$', views.send_comment),
     url(r'^comments/(?P<message_id>\d+)/delete/(?P<comment_id>\d+)', views.delete_comment),
+
 ]
